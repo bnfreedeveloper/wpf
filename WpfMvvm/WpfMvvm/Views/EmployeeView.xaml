@@ -67,9 +67,16 @@
                    ></TextBlock>
         <DataGrid Name="dgEmployees"
                   AutoGenerateColumns="false"
+                  ColumnWidth="*"
                   Grid.Row="6"
                   Grid.Column="1" Margin="5,8,5,8" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="3,3,3,3"
-          ></DataGrid>
+                  ItemsSource="{Binding Path=EmployeeList}">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Employee ID" Width="*" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="Employee Name" Width="*" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Employee Age" Width="*" Binding="{Binding Path=Age}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </UserControl>

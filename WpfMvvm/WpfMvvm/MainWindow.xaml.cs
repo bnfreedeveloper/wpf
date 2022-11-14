@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfMvvm.ViewModels;
 
 namespace WpfMvvm
 {
@@ -20,9 +21,12 @@ namespace WpfMvvm
     /// </summary>
     public partial class MainWindow : Window
     {
+        EmployeeViewModel employeeViewModel;    
         public MainWindow()
         {
             InitializeComponent();
+            employeeViewModel = new EmployeeViewModel();
+            this.DataContext = employeeViewModel;   
         }
     }
 }
