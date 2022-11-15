@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfMvvm.Views"
+             xmlns:local="clr-namespace:WpfMvvm.Views" xmlns:viewmodels="clr-namespace:WpfMvvm.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EmployeeViewModel}"
              mc:Ignorable="d" Height="389" Width="551">
     <Grid Margin="15" VerticalAlignment="Top" HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -42,17 +42,21 @@
          ></TextBlock>
         <TextBox Name="textId"
                  Grid.Row="1"
+                 Text="{Binding Path=Employee.Id, Mode=TwoWay}"
                  Grid.Column="1" Margin="5,8,5,8" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="3,3,3,3"/>
         <TextBox Name="textName"
                  Grid.Row="2"
+                 Text="{Binding Path=Employee.Name, Mode=TwoWay}"
                  Grid.Column="1" Margin="5,8,5,8" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="3,3,3,3"/>
         <TextBox Name="textAge"
                  Grid.Row="3"
+                 Text="{Binding Path=Employee.Age, Mode=TwoWay}"
                  Grid.Column="1" Margin="5,8,5,8" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="3,3,3,3"/>
         <StackPanel Width="210" HorizontalAlignment="Center" Orientation="Horizontal"
                     Grid.Row="3"
                     Grid.Column="1" Margin="0,39,0,0" Grid.RowSpan="2">
             <Button Name="btnAdd"
+                    Command="{Binding Path=AddCommand}"
                     Content="Add" Margin="5,8,5,8"   Padding="3,3,3,3"/>
             <Button Name="btnSearch"
                     Content="Search" Margin="5,8,5,8"   Padding="3,3,3,3"/>
@@ -63,6 +67,7 @@
         </StackPanel>
         <TextBlock Name="txtBlockMessage"
                    Grid.Row="5"
+                   Text="{Binding Path=Message}"
                    Grid.Column="1" Margin="5,8,5,8" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="3,3,3,3"
                    ></TextBlock>
         <DataGrid Name="dgEmployees"
