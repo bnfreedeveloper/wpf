@@ -8,6 +8,7 @@ using WpfMvvm.Models;
 using System.Diagnostics.CodeAnalysis;
 using WpfMvvm.Commands;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace WpfMvvm.ViewModels
 {
@@ -41,7 +42,10 @@ namespace WpfMvvm.ViewModels
             employeeList = new ObservableCollection<Employee>();    
             LoadData();
             Employee = new Employee();
-            addCommand = new AddCommand(AddEmployee);   
+            addCommand = new AddCommand(AddEmployee);
+            searchCommand = new AddCommand(Search);
+            updateCommand = new AddCommand(Update);
+            deleteCommand = new AddCommand(Delete); 
         }
         #region display
         public ObservableCollection<Employee> EmployeeList
@@ -86,6 +90,77 @@ namespace WpfMvvm.ViewModels
         private void LoadData()
         {
             EmployeeList = new ObservableCollection<Employee>(EmployeeService.GetAll());
+        }
+        #endregion
+
+        #region search
+        private AddCommand searchCommand;
+        public AddCommand SearchCommand => searchCommand;
+
+        public void Search()
+        {
+            try
+            {
+                var emp = EmployeeService.Search(Employee.Id);
+                if(emp != null)
+                {
+                    Employee.Name = emp.Name;
+                    Employee.Age = emp.Age;
+                    Message = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = "employee not found ";
+            }
+        }
+        #endregion
+
+        #region update
+        private AddCommand updateCommand;
+        public AddCommand UpdateCommand => updateCommand; 
+        
+        public void Update()
+        {
+            try
+            {
+                var isUpdated = EmployeeService.Update(Employee);
+                if (isUpdated)
+                {
+                    Message = "employe was updated";
+                    LoadData();
+                }
+                else Message = "update operation failed";
+            }
+            catch(Exception ex)
+            {
+                Message = "employee not updated";
+            }
+        }
+        #endregion
+
+        #region delete
+        private AddCommand deleteCommand;
+        public  AddCommand DeleteCommand => deleteCommand;  
+
+        public void Delete()
+        {
+            try
+            {
+                var isDeleted = EmployeeService.Delete(Employee);
+                if (isDeleted)
+                {
+                    Message = "employee was deleted";
+                    LoadData();
+                    Employee = new Employee();
+                }
+                else Message = "employee wasn't deleted";
+
+            }
+            catch(Exception ex)
+            {
+                Message = "delete operation failed";
+            }
         }
         #endregion
     }

@@ -10,7 +10,7 @@ namespace WpfMvvm.Models
     public class Employee : INotifyPropertyChanged
     {
         private string? _name;
-        private int _age;
+        private int? _age;
         private int _id;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -33,7 +33,7 @@ namespace WpfMvvm.Models
 
             }
         }
-        public int Age
+        public int? Age
         {
             get { return _age; }
             set
@@ -41,6 +41,7 @@ namespace WpfMvvm.Models
                 if (_age != value)
                 {
                     _age = value;
+                    OnPropertyChanged("Age");
                 }
             }
         }
