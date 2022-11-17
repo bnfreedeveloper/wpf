@@ -24,7 +24,7 @@ namespace WpfMvvm.ViewModels
             }
         }
         #endregion
-        private EmployeeService EmployeeService;
+        private EmployeeServiceAdo EmployeeService;
         private Employee employee;
         private AddCommand addCommand;
         private string message;
@@ -38,7 +38,7 @@ namespace WpfMvvm.ViewModels
         private ObservableCollection<Employee> employeeList;
         public EmployeeViewModel()
         {
-            EmployeeService = new EmployeeService(); 
+            EmployeeService = new EmployeeServiceAdo(); 
             employeeList = new ObservableCollection<Employee>();    
             LoadData();
             Employee = new Employee();
