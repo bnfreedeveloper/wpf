@@ -10,18 +10,22 @@ namespace WpfMvvm.Commands
     public class AddCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        private Action AddWork;
-        public AddCommand(Action addWork)
+       
+        private Func<Task> AddWork;
+
+        public AddCommand(Func<Task> addWork)
         {
             AddWork = addWork;
         }
+
+       
         public bool CanExecute(object? parameter)
         {
             return true;
         }
-        public void Execute(object? parameter)
+        public async void Execute(object? parameter)
         {
-            AddWork(); 
+            await AddWork();
         }
     }
 }

@@ -126,7 +126,7 @@ namespace WpfMvvm.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfMvvm;V1.0.0.0;component/views/employeeview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfMvvm;component/views/employeeview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\EmployeeView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

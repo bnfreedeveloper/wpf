@@ -24,7 +24,9 @@ namespace WpfMvvm.ViewModels
             }
         }
         #endregion
-        private EmployeeServiceAdo EmployeeService;
+        //ado part
+        //private EmployeeServiceAdo EmployeeService;
+        private EmployeeServiceWithEntity EmployeeService;
         private EmployeeDto employee;
         private AddCommand addCommand;
         private string message;
@@ -38,7 +40,9 @@ namespace WpfMvvm.ViewModels
         private ObservableCollection<EmployeeDto> employeeList;
         public EmployeeViewModel()
         {
-            EmployeeService = new EmployeeServiceAdo(); 
+            //ado part
+            //EmployeeService = new EmployeeServiceAdo(); 
+            EmployeeService = new EmployeeServiceWithEntity(); 
             employeeList = new ObservableCollection<EmployeeDto>();    
             LoadData();
             Employee = new EmployeeDto();
@@ -61,11 +65,11 @@ namespace WpfMvvm.ViewModels
         }
         public AddCommand AddCommand => addCommand; 
 
-        public void AddEmployee()
+        public async Task AddEmployee()
         {
             try
             {
-                var added = EmployeeService.Add(employee);
+                var added = await EmployeeService.Add(employee);
                 LoadData();
                 Employee = new EmployeeDto();
                 if (added) Message = "employee successfully added";
@@ -87,9 +91,9 @@ namespace WpfMvvm.ViewModels
                 }
                 }  
         }
-        private void LoadData()
+        private async Task LoadData()
         {
-            EmployeeList = new ObservableCollection<EmployeeDto>(EmployeeService.GetAll());
+            EmployeeList = new ObservableCollection<EmployeeDto>(await EmployeeService.GetAll());
         }
         #endregion
 
@@ -97,11 +101,11 @@ namespace WpfMvvm.ViewModels
         private AddCommand searchCommand;
         public AddCommand SearchCommand => searchCommand;
 
-        public void Search()
+        public async Task Search()
         {
             try
             {
-                var emp = EmployeeService.Search(Employee.Id);
+                var emp = await EmployeeService.Search(Employee.Id);
                 if(emp != null)
                 {
                     Employee.Name = emp.Name;
@@ -120,11 +124,11 @@ namespace WpfMvvm.ViewModels
         private AddCommand updateCommand;
         public AddCommand UpdateCommand => updateCommand; 
         
-        public void Update()
+        public async Task Update()
         {
             try
             {
-                var isUpdated = EmployeeService.Update(Employee);
+                var isUpdated = await EmployeeService.Update(Employee);
                 if (isUpdated)
                 {
                     Message = "employe was updated";
@@ -143,11 +147,11 @@ namespace WpfMvvm.ViewModels
         private AddCommand deleteCommand;
         public  AddCommand DeleteCommand => deleteCommand;  
 
-        public void Delete()
+        public async Task Delete()
         {
             try
             {
-                var isDeleted = EmployeeService.Delete(Employee);
+                var isDeleted = await EmployeeService.Delete(Employee);
                 if (isDeleted)
                 {
                     Message = "employee was deleted";
