@@ -22,9 +22,9 @@ namespace WpfMvvm.Models
             command.Connection = connection;
             command.CommandType = CommandType.StoredProcedure;
         }
-        public List<Employee> GetAll()
+        public List<EmployeeDto> GetAll()
         {
-            List<Employee> employees = new List<Employee>();
+            List<EmployeeDto> employees = new List<EmployeeDto>();
             try
             {
                 command.Parameters.Clear();
@@ -33,10 +33,10 @@ namespace WpfMvvm.Models
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    Employee emp = null;
+                    EmployeeDto emp = null;
                     while (reader.Read())
                     {
-                        emp = new Employee();
+                        emp = new EmployeeDto();
                         emp.Id = reader.GetInt32(0);
                         emp.Name = reader.GetString(1); 
                         emp.Age = reader.GetInt32(2);   
@@ -57,7 +57,7 @@ namespace WpfMvvm.Models
             }
         }
 
-            public bool Add(Employee emp)
+            public bool Add(EmployeeDto emp)
             {
             if (emp.Age < 18) return false;
             try
@@ -78,7 +78,7 @@ namespace WpfMvvm.Models
             finally { connection.Close(); }
            
             }
-            public bool Update(Employee emp)
+            public bool Update(EmployeeDto emp)
             {
             if (emp.Age < 18) return false;
             try
@@ -99,7 +99,7 @@ namespace WpfMvvm.Models
             }
             finally { connection.Close(); }
         }
-            public bool Delete(Employee emp)
+            public bool Delete(EmployeeDto emp)
             {
 
             try
@@ -118,9 +118,9 @@ namespace WpfMvvm.Models
             finally { connection.Close(); }
 
         }
-            public Employee? Search(int id)
+            public EmployeeDto? Search(int id)
             {
-             Employee emp = null;
+             EmployeeDto emp = null;
             try
             {
                 command.Parameters.Clear();
@@ -130,7 +130,7 @@ namespace WpfMvvm.Models
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    emp = new Employee();
+                    emp = new EmployeeDto();
                     reader.Read();
                     emp.Name = reader.GetString(1);
                     emp.Age = reader.GetInt32(2);

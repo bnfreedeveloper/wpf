@@ -25,7 +25,7 @@ namespace WpfMvvm.ViewModels
         }
         #endregion
         private EmployeeServiceAdo EmployeeService;
-        private Employee employee;
+        private EmployeeDto employee;
         private AddCommand addCommand;
         private string message;
 
@@ -35,20 +35,20 @@ namespace WpfMvvm.ViewModels
             set { message = value; OnPropertyChanged("Message"); }  
         }   
 
-        private ObservableCollection<Employee> employeeList;
+        private ObservableCollection<EmployeeDto> employeeList;
         public EmployeeViewModel()
         {
             EmployeeService = new EmployeeServiceAdo(); 
-            employeeList = new ObservableCollection<Employee>();    
+            employeeList = new ObservableCollection<EmployeeDto>();    
             LoadData();
-            Employee = new Employee();
+            Employee = new EmployeeDto();
             addCommand = new AddCommand(AddEmployee);
             searchCommand = new AddCommand(Search);
             updateCommand = new AddCommand(Update);
             deleteCommand = new AddCommand(Delete); 
         }
         #region display
-        public ObservableCollection<Employee> EmployeeList
+        public ObservableCollection<EmployeeDto> EmployeeList
         {
             get { return employeeList; }    
             set {
@@ -67,7 +67,7 @@ namespace WpfMvvm.ViewModels
             {
                 var added = EmployeeService.Add(employee);
                 LoadData();
-                Employee = new Employee();
+                Employee = new EmployeeDto();
                 if (added) Message = "employee successfully added";
                 else Message = "operation failed";
             }
@@ -76,7 +76,7 @@ namespace WpfMvvm.ViewModels
 
             }
         }
-        public Employee Employee
+        public EmployeeDto Employee
         {
             get { return employee; }
             set { 
@@ -89,7 +89,7 @@ namespace WpfMvvm.ViewModels
         }
         private void LoadData()
         {
-            EmployeeList = new ObservableCollection<Employee>(EmployeeService.GetAll());
+            EmployeeList = new ObservableCollection<EmployeeDto>(EmployeeService.GetAll());
         }
         #endregion
 
@@ -152,7 +152,7 @@ namespace WpfMvvm.ViewModels
                 {
                     Message = "employee was deleted";
                     LoadData();
-                    Employee = new Employee();
+                    Employee = new EmployeeDto();
                 }
                 else Message = "employee wasn't deleted";
 
@@ -165,15 +165,15 @@ namespace WpfMvvm.ViewModels
         #endregion
     }
 
-    public class CompareEmployees : IEqualityComparer<Employee>
+    public class CompareEmployees : IEqualityComparer<EmployeeDto>
     {
-        public bool Equals(Employee? x, Employee? y)
+        public bool Equals(EmployeeDto? x, EmployeeDto? y)
         {
             if (x == null || y == null) return false;
             else return (x.Name == y.Name) && (x.Age == y.Age) && (x.Id == y.Id);
         }
 
-        public int GetHashCode([DisallowNull] Employee obj)
+        public int GetHashCode([DisallowNull] EmployeeDto obj)
         {
             return obj == null ? 0 : obj.GetHashCode(); 
         }
